@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
         minHeight: '100%',
         paddingHorizontal:10,
         paddingVertical:20,
-        backgroundColor:'red',
     },
     sectionContainer: {
         marginTop: 32,
@@ -28,22 +27,30 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     top5View:{
-        width: '100%',
-        height: '50%',
-        backgroundColor:'blue',
+        height: 120,
+        // backgroundColor:'green',
+        flexDirection: 'row'
     },
     top5CountryListView:{
-        width: '100%',
+        width: '20%',
         height: 150,
         backgroundColor: 'white',
         marginBottom: 10,
         borderRadius: 10,
+        marginRight: 10,
+        padding: 10,
+    },
+    slideContainer: {
+        height: 400,
+        width: '100%',
+        backgroundColor: 'red',
+        paddingRight: 20,
     },
     top5CountryTitle:{
-        fontSize: 30, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold"
+        fontSize: 25, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold", marginLeft: 10
     },
     top5CountryConfirmationTitle:{
-        fontSize: 20, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold"
+        fontSize: 20, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold" , marginLeft: 10
     }
 });
 

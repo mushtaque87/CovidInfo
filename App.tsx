@@ -12,7 +12,7 @@ import React from 'react';
 import {
   SafeAreaView,
   StatusBar,
-  useColorScheme,
+  useColorScheme, View,Text
 } from 'react-native';
 
 import {
@@ -27,6 +27,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
+import AppNavigator from "./src/navigation/RootNavigator";
+import Dashboard from "./src/screens/Dashboard/Dashboard";
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CountriesListPage from "./src/screens/CountriesListPage/CountriesListPage";
+
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -36,13 +43,26 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const Stack = createNativeStackNavigator();
+
+  function HomeScreen() {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>Home Screen</Text>
+        </View>
+    );
+  }
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+      <NavigationContainer>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <QueryClientProvider client={queryClient}>
-        <RootNavigator />
+          <Stack.Navigator initialRouteName="Dashboard">
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+              <Stack.Screen name="Details" component={CountriesListPage} />
+          </Stack.Navigator>
       </QueryClientProvider>
-    </SafeAreaView>
+    </NavigationContainer>
   );
 };
 
