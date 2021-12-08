@@ -1,5 +1,6 @@
 enum Route {
-  DetailPage = 'Details',
+  CountryList = 'CountryList',
+  DetailPage = 'CountryDetails',
 }
 
 export default Route;

@@ -5,12 +5,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        minWidth: '100%',
-        minHeight: '100%',
-        paddingHorizontal: 10,
-        paddingVertical: 20,
+        margin: 10,
+
     },
-    top5CountryTitle:{
-        fontSize: 25, paddingLeft: 20, color: brandColors.petrol, fontWeight:'700', marginLeft: 10
+    countryTitle:{
+        fontSize: 25, paddingLeft: 20, color: brandColors.petrol, fontWeight:'500',
     },
+    countryDetailsTitle:{
+        fontSize: 16, paddingLeft: 20, color: brandColors.petrol, fontWeight:'500',
+    },
+
+    searchbar: {
+        height: 50 , borderWidth: 2, borderColor: '#E5E5E5' , borderRadius: 10 , fontSize: 20
+    }
 })
+
+export default styles;

@@ -12,6 +12,7 @@ import Touchable from "../../common/touchable";
 import CountryFlag from "react-native-country-flag";
 import SwipeableViews from "react-swipeable-views-native";
 import create from 'zustand'
+import Graph from "../../component/Graph/Graph";
 
 export type CountryDetails = {
   Country: string;
@@ -26,16 +27,26 @@ export type CountryDetails = {
   Date: string;
 };
 
+export type IGraphData = {
+  labels: [],
+  datasets: {data: []}
+}
 
 const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (navigationprops: NavigationInjectedProps) => {
 
   const [countryData, setCountryData] = useState<CountryDetails>([]);
+  const [top5CountryData, setTop5CountryData] = useState<CountryDetails>([]);
+  const [globalData, setGlobalData] = useState<CountryDetails>([]);
+  const [graphData, setGraphData] = useState<IGraphData>(undefined);
   const { isLoading, error, data } = useQuery('covidSummary', () =>
       fetch('https://api.covid19api.com/summary').then(res => {
             console.log('useQuery', res.json().then(response => {
               console.log('response',response.Countries);
+              setCountryData(response?.Countries);
+              setGlobalData(response?.Global)
               const countriesdata = sortCovidEffectedCountries(response.Countries, 5)
-              setCountryData(countriesdata);
+              setTop5CountryData(countriesdata);
+              // formGraphData();
               //return countriesdata;
             }));
           }
@@ -46,7 +57,9 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
     console.log('navigationprops', navigationprops);
     const {navigation} = navigationprops;
     console.log('navigation', navigation);
-    navigation.navigate(Route.DetailPage);
+    navigation.navigate(Route.CountryList, {
+      countryData,
+    });
   };
 
   const sortCovidEffectedCountries = (data, top: number) => {
@@ -76,10 +89,11 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
  //     setCountryData(countriesdata);
  //  }
 
-  // useEffect(() => {
-  //   // trythis();
-  //   return () => {};
-  // }, []);
+  useEffect(() => {
+    console.log('formGraphData useEffect');
+   formGraphData();
+    return () => {};
+  }, [top5CountryData]);
 
   function Top5CountriesList() {
     console.log('Top5CountriesList',countryData);
@@ -88,8 +102,8 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
    // const {status, data, error, isFetching} = FetchCovidSummary();
     return (
       <View style={{flex: 1, flexDirection: 'row', width: '100%', height: 220, paddingRight: 10}}>
-        {countryData?.length > 0 &&
-        countryData.map(country => (
+        {top5CountryData?.length > 0 &&
+        top5CountryData.map(country => (
             // <SwipeableViews style={styles.slideContainer}>
             <Touchable style={styles.top5CountryListView} key={country.TotalConfirmed} onPress={() => {
                 console.log('country pressed', country.Country);
@@ -112,23 +126,33 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
     );
   }
 
+   function formGraphData () {
+    let labels: [string] = [];
+    let data : [number] = [];
+    top5CountryData.forEach(country => {
+      console.log('graph country', country)
+      labels.push(country.CountryCode);
+      data.push(country.TotalConfirmed)
+    })
+    const graphData = {
+      labels: labels,
+      datasets: [{data: data}]
+    }
+    console.log('formGraphData data', graphData)
+     return graphData;
+  }
 
   return (
     <View style={styles.container}>
-      {/*<Text>Dashboard</Text>*/}
-      {/*<ScrollView>*/}
-        {/*{postId > -1 ? (*/}
           <ScrollView style={styles.top5View}>
-         <Top5CountriesList />
+            <Top5CountriesList />
           </ScrollView>
-        {/*):null}*/}
-        {/*<Button*/}
-        {/*  onPress={moveToDetailPage}*/}
-        {/*  title="See More"*/}
-        {/*  color="#841584"*/}
-        {/*  accessibilityLabel="Learn more about other countries clicking this button"*/}
-        {/*/>*/}
-      {/*</ScrollView>*/}
+            <View style={styles.graphView}>
+            <Graph data={formGraphData()}/>
+            </View>
+              <View style={{ marginTop: 20, height: '40%' , backgroundColor:'red'}}>
+
+              </View>
     </View>
   );
 };

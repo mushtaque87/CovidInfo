@@ -5,10 +5,11 @@ const styles = StyleSheet.create({
     container: {
         flex:1,
         flexDirection: 'column',
-        minWidth: '100%',
-        minHeight: '100%',
         paddingHorizontal:10,
         paddingVertical:20,
+    },
+    graphView: {
+        width: '30%'
     },
     sectionContainer: {
         marginTop: 32,

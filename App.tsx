@@ -33,6 +33,7 @@ import Dashboard from "./src/screens/Dashboard/Dashboard";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CountriesListPage from "./src/screens/CountriesListPage/CountriesListPage";
+import CountriesDetailsPage from "./src/screens/CountryDetailPage/CountryDetailsPage";
 
 
 const App = () => {
@@ -59,7 +60,8 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
           <Stack.Navigator initialRouteName="Dashboard">
             <Stack.Screen name="Dashboard" component={Dashboard} />
-              <Stack.Screen name="Details" component={CountriesListPage} />
+              <Stack.Screen name="CountryList" component={CountriesListPage} />
+              <Stack.Screen name="CountryDetails" component={CountriesDetailsPage} />
           </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>
