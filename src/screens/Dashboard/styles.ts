@@ -28,9 +28,10 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     top5View:{
-        height: 120,
+        height: 180,
         // backgroundColor:'green',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 20,
     },
     top5CountryListView:{
         width: '20%',

@@ -91,7 +91,7 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
 
   useEffect(() => {
     console.log('formGraphData useEffect');
-   formGraphData();
+   //formGraphData('Bar');
     return () => {};
   }, [top5CountryData]);
 
@@ -114,6 +114,9 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
                 <CountryFlag isoCode={country.CountryCode} size={30} />
                 <Text style={styles.top5CountryTitle}>{country.Country}</Text>
               </View>
+              <Text style={styles.top5CountryConfirmationTitle}>
+                Total Confirmed:
+              </Text>
 
               <Text style={styles.top5CountryConfirmationTitle}>
                 {country.TotalConfirmed}
@@ -126,11 +129,27 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
     );
   }
 
-   function formGraphData () {
+  //  function formGraphData () {
+  //   let labels: [string] = [];
+  //   let data : [number] = [];
+  //   top5CountryData.forEach(country => {
+  //     console.log('graph country', country)
+  //     labels.push(country.CountryCode);
+  //     data.push(country.TotalConfirmed)
+  //   })
+  //   const graphData = {
+  //     labels: labels,
+  //     datasets: [{data: data}]
+  //   }
+  //   console.log('formGraphData data', graphData)
+  //    return graphData;
+  // }
+
+  function formTop5GraphData () {
     let labels: [string] = [];
-    let data : [number] = [];
+    let data: [number] = [];
     top5CountryData.forEach(country => {
-      console.log('graph country', country)
+      // console.log('graph country', country)
       labels.push(country.CountryCode);
       data.push(country.TotalConfirmed)
     })
@@ -139,21 +158,69 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
       datasets: [{data: data}]
     }
     console.log('formGraphData data', graphData)
-     return graphData;
+    return graphData;
   }
 
+  function formGlobalGraphData () {
+    console.log('formGlobalGraphData',globalData)
+    if(!globalData){
+      return {
+        labels: ["TotalConfirmed", "TotalDeaths", "TotalRecovered"],
+        datasets: [{
+          data: [0,0,0]
+        }]
+      }
+    }
+    const data = {
+      labels: ["TotalConfirmed", "TotalDeaths", "TotalRecovered"],
+      datasets: [{
+           data: [globalData.TotalConfirmed || 0, globalData.TotalDeaths || 0, globalData.TotalRecovered || 0 ]
+      }]
+    };
+    return data;
+  }
+
+  // function formGraphData (graphType) {
+  //   switch (graphType) {
+  //     case 'Bar':
+  //       let labels: [string] = [];
+  //       let data: [number] = [];
+  //       top5CountryData.forEach(country => {
+  //        // console.log('graph country', country)
+  //         labels.push(country.CountryCode);
+  //         data.push(country.TotalConfirmed)
+  //       })
+  //       const graphData = {
+  //         labels: labels,
+  //         datasets: [{data: data}]
+  //       }
+  //       console.log('formGraphData data', graphData)
+  //       return graphData;
+  //
+  //     case 'Pie':
+  //       return [{
+  //         name: "Seoul",
+  //         population: 21500000,
+  //         color: "rgba(131, 167, 234, 1)",
+  //         legendFontColor: "#7F7F7F",
+  //         legendFontSize: 15
+  //       },]
+  //   }
+  // }
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
           <ScrollView style={styles.top5View}>
             <Top5CountriesList />
           </ScrollView>
             <View style={styles.graphView}>
-            <Graph data={formGraphData()}/>
+            <Graph data={formTop5GraphData()} graphType = {'Bar'} height={200}/>
             </View>
-              <View style={{ marginTop: 20, height: '40%' , backgroundColor:'red'}}>
-
+              <View style={{paddingTop: 10}}>
+                <Text style={[styles.top5CountryTitle]}> Global Data: </Text>
+                { globalData ? <Graph data={formGlobalGraphData()} graphType = {'Bar'} height={300}/> : null}
               </View>
-    </View>
+    </ScrollView>
   );
 };
 export default compose(withNavigation)(Dashboard);
