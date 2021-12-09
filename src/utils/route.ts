@@ -1,4 +1,5 @@
 enum Route {
+  Dashboard = 'Dashboard',
   CountryList = 'CountryList',
   DetailPage = 'CountryDetails',
 }
