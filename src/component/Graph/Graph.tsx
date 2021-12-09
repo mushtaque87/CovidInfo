@@ -11,6 +11,10 @@ import {NavigationInjectedProps, withNavigation} from "react-navigation";
 import { Dimensions } from "react-native";
 
 //const Graph: (data) => JSX.Element = (data) => {
+export type IGraphData = {
+    labels: [],
+    datasets: {data: []}
+}
 
 function Graph({data, graphType, height}) {
     console.log('graph data render ', data);
@@ -44,7 +48,7 @@ function Graph({data, graphType, height}) {
                 <BarChart
                     // style={graphStyle}
                     data={data}
-                    width={Dimensions.get("window").width - 20}
+                    width={Dimensions.get("window").width - 30}
                     height={height}
                     yAxisLabel=""
                     chartConfig={chartConfig()}
@@ -63,6 +67,15 @@ function Graph({data, graphType, height}) {
                         paddingLeft={"15"}
                         center={[10, 50]}
                         absolute
+                    />
+                )
+            case 'Line':
+                return (
+                    <LineChart
+                        data={data}
+                        width={Dimensions.get("window").width - 30}
+                        height={height}
+                        chartConfig={chartConfig()}
                     />
                 )
         }

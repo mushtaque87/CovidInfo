@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import {brandColors} from "../../common/common-styles";
+import {borderRadius, brandColors} from "../../common/common-styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -7,9 +7,15 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal:10,
         paddingVertical:20,
+        paddingBottom: 20
     },
     graphView: {
-        width: '30%'
+        flex: 1,
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#797979',
+        borderRadius: 5,
+        padding: 5,
     },
     sectionContainer: {
         marginTop: 32,
@@ -53,7 +59,13 @@ const styles = StyleSheet.create({
     },
     top5CountryConfirmationTitle:{
         fontSize: 20, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold" , marginLeft: 10
-    }
+    },
+    globalDataTitle:{
+        fontSize: 14, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold" , marginLeft: 10
+    },
+    dataTitle:{
+        fontSize: 25, paddingRight: 20, color: brandColors.petrol, fontWeight: "bold", marginLeft: 10
+    },
 });
 
 export default styles;

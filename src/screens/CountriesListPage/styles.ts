@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 
     },
     countryTitle:{
-        fontSize: 25, paddingLeft: 20, color: brandColors.petrol, fontWeight:'500',
+        fontSize: 25, paddingLeft: 20, color: '#fff', fontWeight:'500',
     },
     countryDetailsTitle:{
         fontSize: 16, paddingLeft: 20, color: brandColors.petrol, fontWeight:'500',
@@ -17,6 +17,13 @@ const styles = StyleSheet.create({
 
     searchbar: {
         height: 50 , borderWidth: 2, borderColor: '#E5E5E5' , borderRadius: 10 , fontSize: 20
+    },
+    cardView: {
+        borderWidth: 1,
+        borderColor: '#797979',
+        borderRadius: 5,
+        backgroundColor: '#E5E5E5' ,
+        marginVertical: 5
     }
 })
 
