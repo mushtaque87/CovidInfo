@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import styles from './styles';
 import {NavigationInjectedProps, withNavigation} from 'react-navigation';
@@ -11,6 +11,7 @@ import TopCountriesCard from "../../component/TopCountriesCard/TopCountriesCard"
 import {sortCovidEffectedCountries} from '../../utils/helper'
 import Loader from "../../common/Loader";
 import {fetchCovidSummary} from "../../network/NetworkManager";
+import { useFocusEffect } from '@react-navigation/native'
 
 export type CountryDetails = {
   Country: string;
@@ -25,14 +26,16 @@ export type CountryDetails = {
   Date: string;
 };
 
+
 const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (navigationprops: NavigationInjectedProps) => {
 
-
+  const enabledRef = useRef(false)
   const [countryData, setCountryData] = useState<CountryDetails>(data?.Countries);
   const [top5CountryData, setTop5CountryData] = useState<CountryDetails>([]);
   const [globalData, setGlobalData] = useState<CountryDetails>([]);
 
   const fetchSummary = () => {
+    console.log('fetchSummary');
     fetch('https://api.covid19api.com/summary').then(res => {
           console.log('useQuery', res.json().then(response => {
             console.log('response',response.Countries);
@@ -45,9 +48,19 @@ const Dashboard: (navigationprops: NavigationInjectedProps) => JSX.Element = (na
     )
   }
 
-  const { isLoading, error, data } = useQuery('covidSummary', fetchSummary)
-  console.log('response data:',data);
 
+    useFocusEffect(
+        useCallback(() => {
+          console.log('useFocusEffect',enabledRef);
+          if (enabledRef.current) {
+             fetchSummary()
+          } else {
+            enabledRef.current = true
+          }
+        }, [])
+    )
+
+  const { isLoading, error, data } = useQuery('covidSummary', fetchSummary)
 
 
   const moveToDetailPage = () => {

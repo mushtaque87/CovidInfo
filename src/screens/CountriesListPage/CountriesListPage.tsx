@@ -31,7 +31,6 @@ const CountriesListPage: React.FC<{}> = (navigationprops: NavigationInjectedProp
 
     useEffect(() => {
         if (searchedCountry.length === 0) {
-            // const sortedCountries = sortCountryCodes(items);
             setFilteredCountriesData(countriesData);
         } else {
             const searchedCountries = countriesData?.filter(e => {
@@ -39,7 +38,6 @@ const CountriesListPage: React.FC<{}> = (navigationprops: NavigationInjectedProp
                     .toUpperCase()
                     .includes(searchedCountry.toUpperCase());
             });
-
             setFilteredCountriesData(searchedCountries);
         }
     }, [countriesData,searchedCountry]);
@@ -64,15 +62,12 @@ const CountriesListPage: React.FC<{}> = (navigationprops: NavigationInjectedProp
     function onRenderItem(country: CountryInfo): JSX.Element {
         const {item} = country;
         return (
-            <Touchable key={item.ISO2} style={styles.cardView} onPress={() => {
-                navigateToDetailPage(item.Country);
-            }}>
+            <Touchable key={item.ISO2} style={styles.cardView}>
                 <View style={{flex: 1 , flexDirection: 'column'}}>
                     <View key={item.ISO2} style={{flex: 1, flexDirection: 'row' , marginVertical: 10 , backgroundColor: brandColors.petrol, alignItems: 'center'}}>
 
                         <Text style={[styles.countryTitle,{marginRight: 10}]}> {item.Country}</Text>
                         <CountryFlag isoCode={item.CountryCode} size={20} />
-                        {/*<Text>{country.TotalConfirmed}</Text>*/}
                     </View>
                     <Text style={styles.countryDetailsTitle} > Confirmed : {item.TotalConfirmed}</Text>
                     <Text style={styles.countryDetailsTitle}> Death : {item.TotalDeaths}</Text>
