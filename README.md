@@ -30,9 +30,9 @@ It also shows a consolidated  Global Summary of all the reported confirmed cases
 This screens shows all the countries and the reported cases. You can search by country name.
 The screen gives you option to search/sort countries based on case Type and sort Type
 
-![Dashboard](covid_1.png)
-![Search for countries](covid_2.png)
-![Sort by cases](covid_3.png)
+![Dashboard](covid_1.gif)
+![Search for countries](covid_2.gif)
+![Sort by cases](covid_3.gif)
 
 Notes:
 
