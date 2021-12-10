@@ -1,5 +1,5 @@
 echo '******** Clean Build and Node Modules ********'
-#rm -rf ~/Library/Developer/Xcode/DerivedData/*
+rm -rf ~/Library/Developer/Xcode/DerivedData/*
 rm -rf node_modules/ && yarn install
 
 echo '******** Pod Install ********'

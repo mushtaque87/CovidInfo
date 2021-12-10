@@ -2,13 +2,15 @@
 Application to fetch Covid Datas and Summary
 
 ### How to run
-Go to root folder and first give permission to run the script file from the terminal
-chmod +x ./scripts/runscript.sh
-and then run the script
-./scripts/runscript.sh
+Go to root folder and run the below command from terminal to give permission to run the script file
+```chmod +x ./scripts/runscript.sh```
 
-The command will clear all previous node_module/ packages and 
-1.Install new node_modules package .
+and then run the script
+```./scripts/runscript.sh```
+
+The command will clear all previous node_module/ packages, derived datas and 
+
+1.Install new node_modules packages.
 
 2.Install pods 
 
@@ -27,3 +29,18 @@ It also shows a consolidated  Global Summary of all the reported confirmed cases
 2. Country List Screen.
 This screens shows all the countries and the reported cases. You can search by country name.
 The screen gives you option to search/sort countries based on case Type and sort Type
+
+![Dashboard](covid_1.png)
+![Search for countries](covid_2.png)
+![Sort by cases](covid_3.png)
+
+Notes:
+
+1.The App uses React Navigation 6 for navigation. 
+
+2.ReactQuery for fetching,caching and re-rendering datas on screens on app state change and screen focus/re-focus.
+
+3.react native state management techniques.
+
+4.react-native-chart-kit for graphs.
+
