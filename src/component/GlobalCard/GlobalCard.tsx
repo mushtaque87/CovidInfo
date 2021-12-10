@@ -25,7 +25,7 @@ function GlobalCard({globalData}) {
             globalData.TotalDeaths || 0,
             globalData.TotalRecovered || 0,
           ],
-          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+          color: (opacity = 1) => `rgba(34, 198, 34, ${opacity})`, // optional
           strokeWidth: 2, // optional
         },
       ],

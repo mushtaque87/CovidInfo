@@ -34,7 +34,7 @@ function Graph({data, graphType, height}) {
       propsForDots: {
         r: '6',
         strokeWidth: '2',
-        stroke: '#fff',
+        stroke: '#FFFF00',
       },
     };
   };

@@ -9,6 +9,8 @@ import {CountryDetails} from '../Dashboard/Dashboard';
 import Touchable from '../../common/touchable';
 import Route from '../../utils/route';
 import {borderRadius, brandColors} from '../../common/common-styles';
+import SegmentedControlTab from "react-native-segmented-control-tab";
+import {sortCountriesOnCaseType} from "../../utils/helper";
 
 export type CountryInfo = {
   Country: string;
@@ -21,8 +23,9 @@ const CountriesListPage: React.FC<{}> = (
 ) => {
   const [searchedCountry, setSearchedCountry] = useState('');
   const [countriesData, setCountriesData] = useState<CountryDetails>(undefined);
-  const [filteredCountriesData, setFilteredCountriesData] =
-    useState<CountryDetails>([]);
+  const [filteredCountriesData, setFilteredCountriesData] = useState<CountryDetails>([]);
+  const [sortCaseTypeIndex, setSortCaseTypeIndex] = useState(0);
+  const [sortTypeIndex, setSortTypeIndex] = useState(0);
 
   useEffect(() => {
     const countrydetails = navigationprops.route.params.countryData;
@@ -41,11 +44,35 @@ const CountriesListPage: React.FC<{}> = (
     }
   }, [countriesData, searchedCountry]);
 
+  useEffect(() => {
+    console.log('sort data',sortCaseTypeIndex, sortTypeIndex);
+    const data = sortCountriesOnCaseType(filteredCountriesData,sortCaseTypeIndex, sortTypeIndex);
+    console.log('sorted data',data);
+    setFilteredCountriesData(data);
+  }, [sortCaseTypeIndex, sortTypeIndex]);
+
   const updateSearch = search => {
     setSearchedCountry(search);
   };
+
   function getItemKey(country: CountryInfo) {
     return country?.ISO2;
+  }
+
+  function handleCaseTypeIndexChange(index: number) {
+    console.log('handleCaseTypeIndexChange',index);
+    // const data = sortCountriesOnCaseType(filteredCountriesData,index);
+    // console.log('sorted data',data);
+    // setFilteredCountriesData(data);
+    setSortCaseTypeIndex(index);
+  }
+
+  function handleSortTypeIndexChange(index: number) {
+    console.log('handleSortTypeIndexChange',index);
+    // const data = sortCountriesOnCaseType(filteredCountriesData,index);
+    // console.log('sorted data',data);
+    // setFilteredCountriesData(data);
+    setSortTypeIndex(index);
   }
 
   function onRenderItem(country: CountryInfo): JSX.Element {
@@ -87,6 +114,23 @@ const CountriesListPage: React.FC<{}> = (
         returnKeyType="search"
         underlineColorAndroid="transparent"
       />
+      <View   style ={{ marginVertical: 10}}>
+        <SegmentedControlTab
+            tabStyle={{backgroundColor:'#E5E5E5'}}
+            values={["Confirmed", "Dealth", "Recovered"]}
+            selectedIndex={sortCaseTypeIndex}
+            onTabPress={handleCaseTypeIndexChange}
+        />
+      </View>
+      <View   style ={{ marginVertical: 10}}>
+        <SegmentedControlTab
+            tabStyle={{backgroundColor:'#E5E5E5'}}
+            values={["High to Low", "Low to High"]}
+            selectedIndex={sortTypeIndex}
+            onTabPress={handleSortTypeIndexChange}
+        />
+      </View>
+
       <FlatList
         data={filteredCountriesData}
         keyExtractor={getItemKey}
@@ -94,6 +138,7 @@ const CountriesListPage: React.FC<{}> = (
         style={{borderRadius: 5}}
       />
     </View>
+
   );
 };
 export default compose(withNavigation)(CountriesListPage);
